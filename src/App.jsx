@@ -5,6 +5,7 @@ import Navbar from './components/navbar';
 import Login from './pages/Login'; // Create this component
 import Register from './pages/Register'; // Create this component
 import DietForm from './pages/DietForm'; // Your diet maker component
+import ProtectedRoute from './utils/ProtectedRoute';
 
 function App() {
   return (
@@ -14,7 +15,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/diet-form" element={<DietForm />} />
+        {/* Protected Route for diet form */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/diet-form" element={<DietForm />} />
+        </Route>
+
         {/* Add more routes as needed */}
       </Routes>
     </Router>

@@ -19,16 +19,22 @@ const Login = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify({ email, password }),
       });
 
       if (!response.ok) {
-        throw new Error('Login failed!');
+        throw new Error('Login failed! Please check your credentials.');
       }
 
       const data = await response.json();
       console.log('Login successful:', data);
+
+      // Store token in localStorage
+      localStorage.setItem('authToken', data.token); // Assuming the token comes as `data.token`
+      localStorage.setItem('userName', data.user.name);
+
       setError('');
       setIsModalOpen(true);
 

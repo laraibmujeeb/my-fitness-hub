@@ -1,21 +1,26 @@
 // src/components/Register.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsModalOpen(false);
 
     try {
       const response = await fetch('http://localhost:8000/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify({ name, email, password }),
       });
@@ -27,8 +32,19 @@ const Register = () => {
 
       const data = await response.json();
       console.log('Registration successful:', data);
+
+      localStorage.setItem('userName', name); // Save the user's name after registration
+
+      // Open modal for success message
+      setIsModalOpen(true);
+
+      // Redirect to login page after a short delay
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000); // Adjust the delay as needed
     } catch (error) {
       setError(error.message);
+      setIsModalOpen(true); // Show modal for errors
     }
   };
 
@@ -70,6 +86,27 @@ const Register = () => {
           Register
         </button>
       </form>
+
+      {/* Modal for success/error message */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 shadow-lg text-center">
+            {error ? (
+              <div className="text-red-500 text-lg font-bold">{error}</div>
+            ) : (
+              <div className="text-green-500 text-lg font-bold">
+                {name}, you have successfully registered!
+              </div>
+            )}
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="mt-4 px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-600 transition"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

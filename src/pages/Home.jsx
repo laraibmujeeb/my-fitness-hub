@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/navbar';
 
 function Home() {
+  const userName = localStorage.getItem('userName'); // Retrieve user name from localStorage
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-slate-900 to-slate-700 text-white flex flex-col justify-between">
       {/* Hero Section */}
@@ -10,6 +11,11 @@ function Home() {
         <h2 className="text-5xl font-extrabold mb-6 text-white leading-tight animate-fade-in">
           Achieve Your Fitness Goals <br /> with My Fitness Hub
         </h2>
+        {userName && (
+          <h3 className="text-3xl font-semibold mb-4 animate-fade-in">
+            Welcome, {userName}!
+          </h3>
+        )}
         <p className="text-lg mb-10 max-w-2xl mx-auto text-slate-300 animate-fade-in">
           Track your fitness, plan your diet, and get personalized
           recommendations. Join us today to start your fitness journey with a
