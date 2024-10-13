@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home'; // Create this component
+import Home from './pages/Home';
 import Navbar from './components/navbar';
-import Login from './pages/Login'; // Create this component
-import Register from './pages/Register'; // Create this component
-import DietForm from './pages/DietForm'; // Your diet maker component
+import Login from './pages/Login';
+import Register from './pages/Register';
+import DietForm from './pages/DietForm';
 import ProtectedRoute from './utils/ProtectedRoute';
+import PublicRoute from './utils/PublicRoute'; // Import PublicRoute
 
 function App() {
   return (
@@ -13,8 +14,13 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+
+        {/* Public Routes: Only accessible if NOT logged in */}
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+
         {/* Protected Route for diet form */}
         <Route element={<ProtectedRoute />}>
           <Route path="/diet-form" element={<DietForm />} />

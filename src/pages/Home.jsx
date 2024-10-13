@@ -31,9 +31,11 @@ function Home() {
       {/* Features Section */}
       <section className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center py-16">
         <div className="bg-slate-800 p-8 rounded-lg shadow-md hover:bg-slate-900 transition duration-300 transform hover:-translate-y-1">
-          <h3 className="text-2xl font-bold mb-4 text-slate-100">
-            Personalized Diet Plans
-          </h3>
+          <Link to="/diet-form">
+            <h3 className="text-2xl font-bold mb-4 text-slate-100">
+              Personalized Diet Plans
+            </h3>
+          </Link>
           <p className="text-sm text-slate-300">
             Get a diet plan that is customized to your fitness goals and dietary
             preferences.
